@@ -1,4 +1,4 @@
-library(atrrr)
+welibrary(atrrr)
 library(jsonlite)
 library(nominatimlite)
 library(sf)
@@ -109,7 +109,7 @@ post_results <- atrrr::post(text = "Guess which city this is!\nBot and map made 
                    image_alt="A map of a city somewhere in the world.\n\nView code and check your answer here: https://github.com/Russell-Shean/random-city-bot")
 
 
-print(post_results)
+#print(post_results)
 # format a link from uri
 post_id <- post_results$uri |> str_extract("(?<=app.bsky.feed.post/).*")
 
