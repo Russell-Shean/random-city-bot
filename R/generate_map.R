@@ -12,7 +12,7 @@ PASSWORD <- Sys.getenv("ACCOUNT_TOKEN")
 
 # Authenticate to Bluesky
 atrrr::auth(user = "random-city-bot.bsky.social",
-           password = password)
+           password = PASSWORD)
 
 
 # load list of cities
