@@ -8,6 +8,7 @@ library(osmdata)
 library(crayon)
 library(magick)
 library(stringr)
+library(stringi)
 
 PASSWORD <- Sys.getenv("ACCOUNT_TOKEN")
 
@@ -17,7 +18,19 @@ atrrr::auth(user = "random-city-bot.bsky.social",
 
 
 # load list of cities
-city_list <- read.csv("city_list.csv")
+city_list <- read.csv("city_list.csv") |> 
+  
+             #make population a number
+             dplyr::mutate(pop_as_number = readr::parse_number(Population)) |>
+  
+
+  
+             # filter for cities over 400 K people
+             dplyr::filter(pop_as_number > 400000) |>
+  
+             # remove accents and special characters from city query
+             dplyr::mutate(city_query = stringi::stri_trans_general(str = City, 
+                                                id = "Latin-ASCII"))
 
 
 # Create a while loop to keep sampling until we get a city with buildings
@@ -31,9 +44,9 @@ while(no_buildings){
     dplyr::sample_n(1) 
   
   
-  
+  # use the city without special characters in the name as the query
   la <- random_row |>
-    pull(City)
+    pull(city_query)
   
   print(la)
   
@@ -47,6 +60,20 @@ while(no_buildings){
   # define a bounding box around the city border
   bbox <- city_border |>
     sf::st_bbox(digits=10)
+  
+  
+  # If the bounding box has NA values
+  # Break the loop and try again with a new city 
+  # It probably means the reverse geocoder couldn't find the city...
+  if(NA %in% bbox){
+    print("Uh oh! The geocoder couldn't find that city!")
+    print("Trying again with a new city!")
+    
+    
+    #skip to the next iteration of the while loop
+    next
+    
+    }
   
   
   # find building features inside bounding box
