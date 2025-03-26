@@ -6,6 +6,7 @@ library(dplyr)
 library(ggplot2)
 library(osmdata)
 library(crayon)
+library(magick)
 
 PASSWORD <- Sys.getenv("ACCOUNT_TOKEN")
 

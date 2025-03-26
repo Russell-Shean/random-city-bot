@@ -463,6 +463,19 @@
       ],
       "Hash": "be38bc740fc51783a78edb5a157e4104"
     },
+    "magick": {
+      "Package": "magick",
+      "Version": "2.8.6",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Requirements": [
+        "R",
+        "Rcpp",
+        "curl",
+        "magrittr"
+      ],
+      "Hash": "c2da2a0418823363acf511164341f830"
+    },
     "magrittr": {
       "Package": "magrittr",
       "Version": "2.0.3",
