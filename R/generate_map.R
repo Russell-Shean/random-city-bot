@@ -103,36 +103,85 @@ print(nrow(city_bldgs))
 
 # create a ggplot map
 map <- ggplot()+
+  
+  # add city buildings for entire bounding box
   geom_sf(city_bldgs, 
-          mapping = aes(color= "white"
-            )) + 
+          mapping = aes(),
+          color= "white") + 
+  
+  # add outline of city border
+  geom_sf(city_border,
+          mapping = aes(),
+          color = "red", 
+          fill = NA,
+          linewidth = 1.5) +
   
   coord_sf(crs = 4326) +
   theme_void() +
-  theme(plot.margin = margin(0,0,0,0),
-         axis.ticks.length = unit(0, "pt"),
+  theme(
+        # Remove plot margins
+        plot.margin = margin(0,0,0,0),
+        
+        #remove axis ticks
+        axis.ticks.length = unit(0, "pt"),
+        
+        # remove legends
+        legend.position="none", 
+        
+        # Create a black outline
         panel.border = element_rect(colour = "black", fill=NA, linewidth=5),
+        
+        # bakc the plot background black
         plot.background = element_rect(fill = "black")
+        
         ) + 
+  
+  
   scale_x_continuous(expand=c(0,0)) +
   scale_y_continuous(expand=c(0,0))
   #theme(plot.margin = margin(0,0,0,0,"pt"))
   #theme_bw()
 
 
-# save map as image
-ggsave(filename = "map.png",
-       dpi = 300,
-       plot = map , 
-       width = (bbox$xmax - bbox$xmin)*50, 
-       height = (bbox$ymax - bbox$ymin)*50#,
-       #units = "px"
-       )
+# Attempt to save the image
+# we'll keep looping until it's the right size
+
+# We'll start by assuming the file is too large for bluesky 
+# and keep incrementing it down until it's not
+image_too_big <- TRUE
+size_factor <- 51
+
+while(image_too_big){
+
+  # decrease the size factor by 1
+  size_factor <- size_factor - 1
+  
+  # save map as image
+  ggsave(filename = "map.png",
+         dpi = 300,
+         plot = map , 
+         width = (bbox$xmax - bbox$xmin)* size_factor, 
+         height = (bbox$ymax - bbox$ymin)* size_factor,
+         #units = "px"
+  )
+  
+  # check file size
+  if(file.info("map.png")$size < 976560){
+    
+    image_too_big <- FALSE
+
+    }
+  
+  
+  
+}
+
+
 
 print(file.exists("map.png"))
 
 # post image of map to bluesky
-post_results <- atrrr::post(text = "Guess which city this is!\nBot and map made with #rstats.\n\nCode and answer here: https://github.com/Russell-Shean/random-city-bot \n\nQuestions, comments, concerns? Reach out to @rshean.bsky.social",
+post_results <- atrrr::post(text = "Guess which city this is!\nBot and map made with rstats.\n\nCode and answer here: https://github.com/Russell-Shean/random-city-bot \n\nQuestions, comments, concerns? Reach out to @rshean.bsky.social",
                  image = "map.png",
                    image_alt="A map of a city somewhere in the world.\n\nView code and check your answer here: https://github.com/Russell-Shean/random-city-bot")
 
