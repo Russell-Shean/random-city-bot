@@ -7,6 +7,7 @@ library(ggplot2)
 library(osmdata)
 library(crayon)
 library(magick)
+library(stringr)
 
 PASSWORD <- Sys.getenv("ACCOUNT_TOKEN")
 
@@ -19,40 +20,59 @@ atrrr::auth(user = "random-city-bot.bsky.social",
 city_list <- read.csv("city_list.csv")
 
 
-# pick a random city
-random_row <- city_list |>
-              dplyr::sample_n(1) 
+# Create a while loop to keep sampling until we get a city with buildings
+no_buildings <- TRUE
+
+while(no_buildings){
+  
+  
+  # pick a random city
+  random_row <- city_list |>
+    dplyr::sample_n(1) 
+  
+  
+  
+  la <- random_row |>
+    pull(City)
+  
+  print(la)
+  
+  la <- "Araure"
+  
+  
+  # find the city's border using a reverse geocoder
+  # appears to work best with only the city 
+  city_border <- nominatimlite::geo_lite_sf(address = la, 
+                                            points_only = FALSE)
+  
+  
+  # define a bounding box around the city border
+  bbox <- city_border |>
+    sf::st_bbox(digits=10)
+  
+  
+  # find building features inside bounding box
+  city_bldgs <- opq(bbox) |> 
+    add_osm_feature(key = 'building') |> 
+    osmdata::osmdata_sf()
+  
+  
+  # select the building data we need?
+  city_bldgs <- city_bldgs$osm_polygons |> 
+    dplyr::select(osm_id, geometry)
+  
+  # check to see if there are buildings
+  # and if we can escape the loop
+  if(nrow(city_bldgs) > 0){
+    
+    no_buildings <- FALSE
+  }
+  
+  
+}
 
 
-
-la <- random_row |>
-               pull(City)
-
-print(la)
-
-
-
-# find the city's border using a reverse geocoder
-# appears to work best with only the city 
-city_border <- nominatimlite::geo_lite_sf(address = la, 
-                                                points_only = FALSE)
-
-
-# define a bounding box around the city border
-bbox <- city_border |>
-        sf::st_bbox(digits=10)
-
-
-# find building features inside bounding box
-city_bldgs <- opq(bbox) |> 
-              add_osm_feature(key = 'building') |> 
-              osmdata::osmdata_sf()
-
-
-# select the building data we need?
-city_bldgs <- city_bldgs$osm_polygons |> 
-              dplyr::select(osm_id, geometry)
-
+# double check that the loop is working...
 print(nrow(city_bldgs))
 
 # create a ggplot map
