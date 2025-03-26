@@ -8,8 +8,10 @@ library(osmdata)
 library(magik)
 library(crayon)
 
+PASSWORD <- Sys.getenv("ACCOUNT_TOKEN")
+
 # Authenticate to Bluesky
-atrrr::auth(user = username,
+atrrr::auth(user = "random-city-bot.bsky.social",
            password = password)
 
 
