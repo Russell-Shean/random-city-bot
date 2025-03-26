@@ -37,8 +37,6 @@ while(no_buildings){
   
   print(la)
   
-  la <- "Araure"
-  
   
   # find the city's border using a reverse geocoder
   # appears to work best with only the city 
