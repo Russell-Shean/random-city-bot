@@ -86,8 +86,14 @@ post_results <- atrrr::post(text = "Guess which city this is!\nBot and map made 
                    image_alt="A map of a city somewhere in the world.\n\nView code and check your answer here: https://github.com/Russell-Shean/random-city-bot")
 
 
-# test reply
-atrrr::post(in_reply_to = post_results$uri, "Test of reply system!")
+# format a link from uri
+post_id <- post_results$uri |> str_extract("(?<=app.bsky.feed.post/).*")
+
+post_link <- paste0("<a id='",
+                    post_results$uri, 
+                    "' href='https://bsky.app/profile/random-city-bot.bsky.social/post/",
+                    post_id,
+                    "'>Link</a>")
 
 # Record the solution
 file_connection <- file("solutions.md", "a")    
@@ -96,7 +102,7 @@ writeLines(paste0("| ", Sys.Date(),
                   " | ", random_row$Region, 
                   " | ", random_row$Country, 
                   " | ", random_row$Population,
-                  " | ", post_results$uri,
+                  " | ", post_link,
                   " |"), file_connection)          
           
 close(file_connection)      
