@@ -9,6 +9,7 @@ library(crayon)
 library(magick)
 library(stringr)
 library(stringi)
+library(readr)
 
 PASSWORD <- Sys.getenv("ACCOUNT_TOKEN")
 
