@@ -1,4 +1,4 @@
-name: Run R Script
+name: Create and post new map
 
 on:
   schedule:
