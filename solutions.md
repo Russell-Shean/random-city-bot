@@ -1,6 +1,8 @@
 # Solutions to the daily map challnge
-Here's a table containing the answer to each day's map challeng
+Here's a table containing the answer to each day's map challenge
 
 | Date | City    | Region | Country   | Population | Post Link |
 | -------- | -------- | ------- | -------- | ------- | ------- |
 | 2025-03-25 | Regina | Saskatchewan | Canada | 226,404 | <a id='at://did:plc:rm5bg2yv2rfh2rcxnjxhfd2f/app.bsky.feed.post/3llb44niubu2j' href='https://bsky.app/profile/random-city-bot.bsky.social/post/3llb44niubu2j'>Link</a> |
+| 2025-03-26 | Pasay | Metro Manila | Philippines | 440,700 | <a id='at://did:plc:rm5bg2yv2rfh2rcxnjxhfd2f/app.bsky.feed.post/3llbbe4awrh2z' href='https://bsky.app/profile/random-city-bot.bsky.social/post/3llbbe4awrh2z'>Link</a> |
+| 2025-03-26 | Hitachi | Ibaraki | Japan | 185,100 | <a id='at://did:plc:rm5bg2yv2rfh2rcxnjxhfd2f/app.bsky.feed.post/3llbbofipck2c' href='https://bsky.app/profile/random-city-bot.bsky.social/post/3llbbofipck2c'>Link</a> |

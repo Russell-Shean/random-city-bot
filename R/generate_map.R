@@ -131,12 +131,12 @@ ggsave(filename = "map.png",
 print(file.exists("map.png"))
 
 # post image of map to bluesky
-post_results <- atrrr::post(text = "Guess which city this is!\nBot and map made with rstats.\n\nCode and answer here: https://github.com/Russell-Shean/random-city-bot \n\nQuestions, comments, concerns? Reach out to @rshean.bsky.social",
+post_results <- atrrr::post(text = "Guess which city this is!\nBot and map made with #rstats.\n\nCode and answer here: https://github.com/Russell-Shean/random-city-bot \n\nQuestions, comments, concerns? Reach out to @rshean.bsky.social",
                  image = "map.png",
                    image_alt="A map of a city somewhere in the world.\n\nView code and check your answer here: https://github.com/Russell-Shean/random-city-bot")
 
 
-print(post_results)
+#print(post_results)
 # format a link from uri
 post_id <- post_results$uri |> str_extract("(?<=app.bsky.feed.post/).*")
 
