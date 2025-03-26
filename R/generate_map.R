@@ -1,4 +1,4 @@
-welibrary(atrrr)
+library(atrrr)
 library(jsonlite)
 library(nominatimlite)
 library(sf)
