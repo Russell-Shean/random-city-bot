@@ -102,19 +102,20 @@ while(no_buildings){
 print(nrow(city_bldgs))
 
 # create a ggplot map
-map <- ggplot()+
+map1 <- ggplot()+
   
   # add city buildings for entire bounding box
   geom_sf(city_bldgs, 
           mapping = aes(),
-          color= "white") + 
+          #color= "white"
+          ) + 
   
   # add outline of city border
   geom_sf(city_border,
           mapping = aes(),
-          color = "red", 
+          color = alpha("#e61b23", 0.7), 
           fill = NA,
-          linewidth = 1.5) +
+          linewidth = 1.25) +
   
   coord_sf(crs = 4326) +
   theme_void() +
@@ -132,7 +133,7 @@ map <- ggplot()+
         panel.border = element_rect(colour = "black", fill=NA, linewidth=5),
         
         # bakc the plot background black
-        plot.background = element_rect(fill = "black")
+        #plot.background = element_rect(fill = "black")
         
         ) + 
   
@@ -141,6 +142,49 @@ map <- ggplot()+
   scale_y_continuous(expand=c(0,0))
   #theme(plot.margin = margin(0,0,0,0,"pt"))
   #theme_bw()
+
+
+# create a ggplot map
+map2 <- ggplot()+
+  
+  # add city buildings for entire bounding box
+  geom_sf(city_bldgs, 
+          mapping = aes(),
+          color= "white"
+  ) + 
+  
+  # add outline of city border
+  geom_sf(city_border,
+          mapping = aes(),
+          color = alpha("#e61b23", 0.7), 
+          fill = NA,
+          linewidth = 1.25) +
+  
+  coord_sf(crs = 4326) +
+  theme_void() +
+  theme(
+    # Remove plot margins
+    plot.margin = margin(0,0,0,0),
+    
+    #remove axis ticks
+    axis.ticks.length = unit(0, "pt"),
+    
+    # remove legends
+    legend.position="none", 
+    
+    # Create a black outline
+    panel.border = element_rect(colour = "black", fill=NA, linewidth=5),
+    
+    # make the plot background black
+    plot.background = element_rect(fill = "black")
+    
+  ) + 
+  
+  
+  scale_x_continuous(expand=c(0,0)) +
+  scale_y_continuous(expand=c(0,0))
+#theme(plot.margin = margin(0,0,0,0,"pt"))
+#theme_bw()
 
 
 # Attempt to save the image
@@ -157,33 +201,64 @@ while(image_too_big){
   size_factor <- size_factor - 1
   
   # save map as image
-  ggsave(filename = "map.png",
+  ggsave(filename = "map1.png",
          dpi = 300,
-         plot = map , 
+         plot = map1 , 
          width = (bbox$xmax - bbox$xmin)* size_factor, 
          height = (bbox$ymax - bbox$ymin)* size_factor,
          #units = "px"
   )
   
   # check file size
-  if(file.info("map.png")$size < 976560){
+  if(file.info("map1.png")$size < 976560){
     
     image_too_big <- FALSE
 
     }
+
+}
+
+
+# we will eventually turn this into a function
+# instead of this super lazy copy and paste stuff lol
+image_too_big <- TRUE
+size_factor <- 51
+
+while(image_too_big){
+  
+  # decrease the size factor by 1
+  size_factor <- size_factor - 1
+  
+  # save map as image
+  ggsave(filename = "map2.png",
+         dpi = 300,
+         plot = map2 , 
+         width = (bbox$xmax - bbox$xmin)* size_factor, 
+         height = (bbox$ymax - bbox$ymin)* size_factor,
+         #units = "px"
+  )
+  
+  # check file size
+  if(file.info("map2.png")$size < 976560){
+    
+    image_too_big <- FALSE
+    
+  }
   
   
   
 }
 
 
+# Print to confirm the map was created
+print(paste("File exists:", file.exists("map1.png")))
+print(paste("File exists:", file.exists("map1.png")))
 
-print(file.exists("map.png"))
 
 # post image of map to bluesky
-post_results <- atrrr::post(text = "Guess which city this is!\nBot and map made with rstats.\n\nCode and answer here: https://github.com/Russell-Shean/random-city-bot \n\nQuestions, comments, concerns? Reach out to @rshean.bsky.social",
-                 image = "map.png",
-                   image_alt="A map of a city somewhere in the world.\n\nView code and check your answer here: https://github.com/Russell-Shean/random-city-bot")
+post_results <- atrrr::post(text = "Guess which city this!\n\nCode and answer here:https://github.com/Russell-Shean/random-city-bot \nMap and Bot Built by:@rshean.bsky.social\n\n#MapQuiz rspatial quiz",
+                 image = c("map1.png", "map2.png"),
+                 image_alt = c("A map of a city somewhere in the world", "A map of a city somewhere in the world"))
 
 
 #print(post_results)
@@ -199,11 +274,22 @@ post_link <- paste0("<a id='",
 # Record the solution
 file_connection <- file("solutions.md", "a")    
 writeLines(paste0("| ", Sys.Date(),
-                  " | ", la,
+                  " | ", random_row$City,
                   " | ", random_row$Region, 
                   " | ", random_row$Country, 
                   " | ", random_row$Population,
                   " | ", post_link,
                   " |"), file_connection)          
           
-close(file_connection)      
+close(file_connection)    
+
+
+# Move images into archive folder
+if(!dir.exists("archive")){dir.create("archive")}
+
+file.copy(from = "map1.png",
+          to = paste0("archive/", la, "1.png"))
+
+file.copy(from = "map2.png",
+          to = paste0("archive/", la, "2.png"))
+
