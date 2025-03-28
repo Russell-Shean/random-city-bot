@@ -1,0 +1,32 @@
+.hiking-icon {
+ /*   background: url('images/hiking.png'); */
+    height: 20px;
+    width: 20px;
+    display: block;
+    /* Other styles here */
+}
+
+.running-icon {
+    /* background: url('images/jogging.png'); */
+    height: 20px;
+    width: 20px;
+    display: block;
+    /* Other styles here */
+}
+
+
+.cycling-icon {
+    height: 30px;
+    width: 30px;
+    display: block;
+    /* Other styles here */
+}
+
+/*<a href="https://www.flaticon.com/free-icons/walk" title="walk icons">Walk icons created by Freepik - Flaticon</a>*/
+.walking-icon {
+   /* background: url('images/walk.png'); */
+    height: 20px;
+    width: 20px;
+    display: block;
+    /* Other styles here */
+}

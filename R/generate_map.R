@@ -256,9 +256,9 @@ print(paste("File exists:", file.exists("map1.png")))
 
 
 # post image of map to bluesky
-post_results <- atrrr::post(text = "Guess which city this!\n\nCode and answer here:https://github.com/Russell-Shean/random-city-bot \nMap and Bot Built by:@rshean.bsky.social\n\n#MapQuiz rspatial quiz",
+post_results <- atrrr::post(text = "Guess which city this is!\n\nCode and answer here:https://github.com/Russell-Shean/random-city-bot \n\nMap and Bot Built by:@rshean.bsky.social\n\n#MapQuiz rspatial quiz",
                  image = c("map1.png", "map2.png"),
-                 image_alt = c("A map of a city somewhere in the world", "A map of a city somewhere in the world"))
+                 image_alt = c("A map of a city somewhere in the world\nMap generated using data from:https://www.openstreetmap.org", "A map of a city somewhere in the world\nMap generated using data from:https://www.openstreetmap.org"))
 
 
 #print(post_results)
