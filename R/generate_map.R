@@ -206,6 +206,7 @@ while(image_too_big){
          plot = map1 , 
          width = (bbox$xmax - bbox$xmin)* size_factor, 
          height = (bbox$ymax - bbox$ymin)* size_factor,
+         limitsize = FALSE
          #units = "px"
   )
   
@@ -235,6 +236,7 @@ while(image_too_big){
          plot = map2 , 
          width = (bbox$xmax - bbox$xmin)* size_factor, 
          height = (bbox$ymax - bbox$ymin)* size_factor,
+         limitsize = FALSE
          #units = "px"
   )
   
