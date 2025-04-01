@@ -1,7 +1,9 @@
 map_UI <- function(id) {
   ns <- NS(id)
     
-leafletOutput(ns("map"))
+leafletOutput(ns("map"), width = "100%", height = "100%") |>
+  shinycssloaders::withSpinner( id = "loading-gif",
+                            image = "https://c.tenor.com/k29LXFgOh9QAAAAd/tenor.gif")
 }
 
 
@@ -12,11 +14,13 @@ map_server <- function(id, activity_tracks) {
     
     output$map <- renderLeaflet({
       
-      city_bldgs |> 
+      city_roads |> 
         leaflet() |>
-        addPolygons(color = "white",
-                    fillOpacity = 0, 
-                    weight = 1)
+        addPolylines(color = "white",
+                     fillOpacity = 0, 
+                     weight = 1) 
+
+      
       
     })
     

@@ -17,6 +17,9 @@ ui <- fluidPage(
 
   #titlePanel("Upload a gpx file to get started!"),
   map_UI("map"),
+  guess_box_UI("guess_box"),
+  
+  tags$script(src="scripts/adjust_map.js")
 
 
 )

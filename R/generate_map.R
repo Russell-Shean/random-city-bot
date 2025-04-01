@@ -19,15 +19,8 @@ atrrr::auth(user = "random-city-bot.bsky.social",
 
 
 # load list of cities
-city_list <- read.csv("city_list.csv") |> 
+city_list <- read.csv("data/touristy_cities.csv") |> 
   
-             #make population a number
-             dplyr::mutate(pop_as_number = readr::parse_number(Population)) |>
-  
-
-  
-             # filter for cities over 400 K people
-             dplyr::filter(pop_as_number > 400000) |>
   
              # remove accents and special characters from city query
              dplyr::mutate(city_query = stringi::stri_trans_general(str = City, 
@@ -43,6 +36,12 @@ while(no_buildings){
   # pick a random city
   random_row <- city_list |>
     dplyr::sample_n(1) 
+  
+  
+  # Try a different city if we've already posted this one
+  if(random_row$posted == "yes"){
+    next
+  }
   
   
   # use the city without special characters in the name as the query
@@ -81,7 +80,7 @@ while(no_buildings){
   city_bldgs <- opq(bbox) |> 
     add_osm_feature(key = 'building') |> 
     osmdata::osmdata_sf()
-  
+
   
   # select the building data we need?
   city_bldgs <- city_bldgs$osm_polygons |> 
@@ -277,10 +276,11 @@ post_link <- paste0("<a id='",
 file_connection <- file("solutions.md", "a")    
 writeLines(paste0("| ", Sys.Date(),
                   " | ", random_row$City,
-                  " | ", random_row$Region, 
-                  " | ", random_row$Country, 
-                  " | ", random_row$Population,
+                  " | ", random_row$country, 
+                  " | ", random_row$subregion, 
+                  " | ", random_row$region,
                   " | ", post_link,
+                  " | ", random_row$id,
                   " |"), file_connection)          
           
 close(file_connection)    

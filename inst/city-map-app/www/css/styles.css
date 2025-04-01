@@ -1,32 +1,39 @@
-.hiking-icon {
- /*   background: url('images/hiking.png'); */
-    height: 20px;
-    width: 20px;
-    display: block;
-    /* Other styles here */
-}
-
-.running-icon {
-    /* background: url('images/jogging.png'); */
-    height: 20px;
-    width: 20px;
-    display: block;
-    /* Other styles here */
-}
 
 
-.cycling-icon {
-    height: 30px;
-    width: 30px;
-    display: block;
-    /* Other styles here */
+/* Change the size and background color
+of the leaflet map container 
+.leaflet-container { background-color: black;
+                    height:100%;}
+                    
+                    
+#map-map*/
+
+
+
+/* bootstrap.min.css | http://127.0.0.1:3000/bootstrap-3.4.1/css/bootstrap.min.css */
+
+.container-fluid {
+   padding-right: 0px; 
+   padding-left: 0px; 
+   height: 100%;
 }
 
-/*<a href="https://www.flaticon.com/free-icons/walk" title="walk icons">Walk icons created by Freepik - Flaticon</a>*/
-.walking-icon {
-   /* background: url('images/walk.png'); */
-    height: 20px;
-    width: 20px;
-    display: block;
-    /* Other styles here */
+
+html, body, .container-fluid, .shiny-spinner-output-container {
+  height: 100%;
+  overflow: hidden;
+  width: 100%;
+  padding-right: 0px; 
+  padding-left: 0px; 
 }
+
+#map {
+  width: auto;
+  height: 100%;
+}
+
+#map-map {
+  width: auto;
+  height: 100%;
+}
+
