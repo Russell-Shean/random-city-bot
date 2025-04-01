@@ -133,7 +133,7 @@ while(no_buildings){
   
   if(nrow(city_bldgs) > 0){
     
-    no_buildings <- TRUE
+    no_buildings <- FALSE
     
   }
   
