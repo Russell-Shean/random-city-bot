@@ -56,10 +56,15 @@ while(no_buildings){
   city_border <- nominatimlite::geo_lite_sf(address = la, 
                                             points_only = FALSE)
   
+  print("city border step finished")
+  
   
   # define a bounding box around the city border
   bbox <- city_border |>
     sf::st_bbox(digits=10)
+  
+  
+  print("Bbox generated")
   
   
   # If the bounding box has NA values
@@ -81,6 +86,7 @@ while(no_buildings){
     add_osm_feature(key = 'building') |> 
     osmdata::osmdata_sf()
 
+  print("city_bldgs created")
   
   # select the building data we need?
   city_bldgs <- city_bldgs$osm_polygons |> 
