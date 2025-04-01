@@ -92,6 +92,31 @@ while(no_buildings){
   city_bldgs <- city_bldgs$osm_polygons |> 
     dplyr::select(osm_id, geometry)
   
+  
+  
+# create roads for shiny
+  city_roads <- opq(bbox) |> 
+    add_osm_features(features = list(
+      
+      'highway' = 'motorway',
+      'highway' = 'trunk',
+      'highway' = 'primary',
+      'highway' = 'secondary',
+      'highway' = 'tertiary'#,
+      #'highway' = 'unclassified'
+    )) |> 
+    
+    osmdata::osmdata_sf()
+  
+  
+  city_roads <- city_roads$osm_lines |> 
+    dplyr::select(osm_id, geometry)
+  
+  
+  # save the city roads to the data folder
+  saveRDS(city_roads, "inst/city-map-app/city_roads.rda")
+  
+  
   # check to see if there are buildings
   # and if we can escape the loop
   if(nrow(city_bldgs) > 0){
@@ -148,6 +173,8 @@ map1 <- ggplot()+
   #theme(plot.margin = margin(0,0,0,0,"pt"))
   #theme_bw()
 
+print("map1 finished")
+
 
 # create a ggplot map
 map2 <- ggplot()+
@@ -191,6 +218,8 @@ map2 <- ggplot()+
 #theme(plot.margin = margin(0,0,0,0,"pt"))
 #theme_bw()
 
+print("map2 finished")
+
 
 # Attempt to save the image
 # we'll keep looping until it's the right size
@@ -224,6 +253,7 @@ while(image_too_big){
 
 }
 
+print("image 1 finished")
 
 # we will eventually turn this into a function
 # instead of this super lazy copy and paste stuff lol
@@ -256,6 +286,7 @@ while(image_too_big){
   
 }
 
+print("image 2 finished")
 
 # Print to confirm the map was created
 print(paste("File exists:", file.exists("map1.png")))
@@ -267,6 +298,8 @@ post_results <- atrrr::post(text = "Guess which city this is!\n\nCode and answer
                  image = c("map1.png", "map2.png"),
                  image_alt = c("A map of a city somewhere in the world\nMap generated using data from:https://www.openstreetmap.org", "A map of a city somewhere in the world\nMap generated using data from:https://www.openstreetmap.org"))
 
+
+print("posting finished")
 
 #print(post_results)
 # format a link from uri
@@ -291,6 +324,8 @@ writeLines(paste0("| ", Sys.Date(),
           
 close(file_connection)    
 
+print("solutions.md updated")
+
 
 # Move images into archive folder
 if(!dir.exists("archive")){dir.create("archive")}
@@ -302,11 +337,16 @@ file.copy(from = "map2.png",
           to = paste0("archive/", la, "2.png"))
 
 
+print("images archived")
+
+
 # update touristy_cities
 city_list |> 
   mutate(posted = ifelse(id == random_row$id,
                         "yes",
                         posted)) |>
   write.csv(file = "data/touristy_cities.csv")
+
+print("city list updated")
 
 

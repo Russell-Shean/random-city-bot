@@ -14,7 +14,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  run-r-script:
+  post-map:
     runs-on: ubuntu-latest
 
     permissions:
@@ -56,6 +56,7 @@ jobs:
 
   deploy:
     name: Deploy to shinyapps
+    needs: post-map
 
     # allow skipping deployment for commits containing '[automated]' or '[no-deploy]' in the commit message
     if: "!contains(github.event.head_commit.message, '[automated]') && !contains(github.event.head_commit.message, '[no-deploy]')"
