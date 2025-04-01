@@ -295,3 +295,12 @@ file.copy(from = "map1.png",
 file.copy(from = "map2.png",
           to = paste0("archive/", la, "2.png"))
 
+
+# update touristy_cities
+city_list |> 
+  mutate(posted = ifelse(id == random_row$id,
+                        "yes",
+                        posted)) |>
+  write.csv(file = "data/touristy_cities.csv")
+
+
