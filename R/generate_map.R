@@ -99,7 +99,7 @@ while(no_buildings){
   # and if we can escape the loop
   if(nrow(city_bldgs) > 0){
     
-    no_buildings <- FALSE
+    next
   }
   
   
@@ -131,7 +131,11 @@ while(no_buildings){
   saveRDS(city_roads, "inst/city-map-app/city_roads.rda")
   
   
-
+  if(nrow(city_bldgs) > 0){
+    
+    no_buildings <- TRUE
+    
+  }
   
   
 }
