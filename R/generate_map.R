@@ -315,12 +315,32 @@ post_results <- atrrr::post(text = "Guess which city this is!\n\nCode and answer
                  image_alt = c("A map of a city somewhere in the world\nMap generated using data from:https://www.openstreetmap.org", "A map of a city somewhere in the world\nMap generated using data from:https://www.openstreetmap.org"))
 
 
+#pause because I doubt the posting is instaneous
+sleep(5)
+
 # reply with link to the shiny
 
-post2_results <- atrrr::post(in_reply_to = post_results$uri,
-                            text = "Here's a link to shiny showing the city's street network:\nhttps://random-city-bot.shinyapps.io/todays-city/")
+tryCatch(
+
+  {
+    post2_results <- atrrr::post(in_reply_to = post_results$uri,
+                                 text = "Here's a link to shiny showing the city's street network:\nhttps://random-city-bot.shinyapps.io/todays-city/")
+    
+    
+  }, error = function(msg){
+    print("error posting yo. Here was the error")
+    print(msg)
+    
+  })
+
+
+
+
 
 print("posting finished")
+
+
+
 
 #print(post_results)
 # format a link from uri
@@ -331,6 +351,9 @@ post_link <- paste0("<a id='",
                     "' href='https://bsky.app/profile/random-city-bot.bsky.social/post/",
                     post_id,
                     "'>Link</a>")
+
+
+
 
 # Record the solution
 file_connection <- file("solutions.md", "a")    
