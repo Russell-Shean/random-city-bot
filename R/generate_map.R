@@ -97,7 +97,7 @@ while(no_buildings){
   
   # check to see if there are buildings
   # and if we can escape the loop
-  if(nrow(city_bldgs) > 0){
+  if(nrow(city_bldgs) < 1){
     
     next
   }
