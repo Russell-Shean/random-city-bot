@@ -7,7 +7,7 @@ pacman::p_load(dplyr,
 
 
 # load the road data that was created when making the map
-load("city_roads.rda")
+sf::st_read("inst/city-map-app/city_roads.geojson")
 
 
 ui <- fluidPage(

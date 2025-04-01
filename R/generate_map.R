@@ -128,7 +128,7 @@ while(no_buildings){
   
   
   # save the city roads to the data folder
-  saveRDS(city_roads, "inst/city-map-app/city_roads.rda")
+  st_write(city_roads, "inst/city-map-app/city_roads.geojson")
   
   
   if(nrow(city_bldgs) > 0){
