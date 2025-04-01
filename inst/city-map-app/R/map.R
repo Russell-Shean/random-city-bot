@@ -1,3 +1,10 @@
+# load the road data that was created when making the map
+city_roads <- sf::st_read("city_roads.geojson")
+
+
+
+
+
 map_UI <- function(id) {
   ns <- NS(id)
     

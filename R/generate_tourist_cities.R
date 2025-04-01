@@ -26,14 +26,18 @@ tables <- page_html |>
 # I won't need to regenerate this frequently so whatever
 touristy_cities <- tables[[3]] |>
   
-  dplyr::rename(country = `Country /Territory`) |>
-  
-  
-  
-  # Add some data for the hints
-  dplyr::mutate(region = countries::country_info(country)$region,
-                subregion = countries::country_info(country)$subregion) |>
-  
+  dplyr::rename(country = `Country /Territory`)
+
+
+# get information about regions
+regions_key <- countries::country_info(touristy_cities$country, fields = c("region", "subregion")) |>
+  dplyr::distinct()
+
+
+
+touristy_cities <- touristy_cities |>
+  left_join(regions_key, join_by("country"=="countries")) |>
+
   # add id number
   dplyr::mutate(id = 1:nrow(tables[[3]])) |>
 
