@@ -317,7 +317,7 @@ post_results <- atrrr::post(text = "Guess which city this is!\n\nCode and answer
 
 # reply with link to the shiny
 
-post2_results <- atrrr:post(in_reply_to = post_results$uri,
+post2_results <- atrrr::post(in_reply_to = post_results$uri,
                             text = "Here's a link to shiny showing the city's street network:\nhttps://random-city-bot.shinyapps.io/todays-city/")
 
 print("posting finished")
