@@ -316,7 +316,7 @@ post_results <- atrrr::post(text = "Guess which city this is!\n\nCode and answer
 
 
 #pause because I doubt the posting is instaneous
-sleep(5)
+Sys.sleep(5)
 
 # reply with link to the shiny
 
