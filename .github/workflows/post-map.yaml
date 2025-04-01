@@ -39,9 +39,7 @@ jobs:
           r-version: '4.4.1'
 
       - name: Install renv and restore packages
-        run: |
-          Rscript -e 'install.packages("renv")'
-          Rscript -e 'renv::restore()'
+        uses: r-lib/actions/setup-renv@v2
 
       - name: Build map and record result
         run: Rscript R/generate_map.R
