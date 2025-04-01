@@ -92,6 +92,15 @@ while(no_buildings){
   city_bldgs <- city_bldgs$osm_polygons |> 
     dplyr::select(osm_id, geometry)
   
+  print("city_bldgs filtered")
+  
+  
+  # check to see if there are buildings
+  # and if we can escape the loop
+  if(nrow(city_bldgs) > 0){
+    
+    no_buildings <- FALSE
+  }
   
   
 # create roads for shiny
@@ -108,21 +117,21 @@ while(no_buildings){
     
     osmdata::osmdata_sf()
   
+  print("city_roads created")
+  
   
   city_roads <- city_roads$osm_lines |> 
     dplyr::select(osm_id, geometry)
+  
+  
+  print("city_roads filtered")
   
   
   # save the city roads to the data folder
   saveRDS(city_roads, "inst/city-map-app/city_roads.rda")
   
   
-  # check to see if there are buildings
-  # and if we can escape the loop
-  if(nrow(city_bldgs) > 0){
-    
-    no_buildings <- FALSE
-  }
+
   
   
 }
@@ -132,7 +141,10 @@ while(no_buildings){
 print(nrow(city_bldgs))
 
 # create a ggplot map
-map1 <- ggplot()+
+#map1 <- 
+  
+  
+  ggplot()+
   
   # add city buildings for entire bounding box
   geom_sf(city_bldgs, 
@@ -165,10 +177,10 @@ map1 <- ggplot()+
         # bakc the plot background black
         #plot.background = element_rect(fill = "black")
         
-        ) + 
+        ) #+ 
   
   
-  scale_x_continuous(expand=c(0,0)) +
+  scale_x_continuous(expand=c(0,0)) #+
   scale_y_continuous(expand=c(0,0))
   #theme(plot.margin = margin(0,0,0,0,"pt"))
   #theme_bw()
