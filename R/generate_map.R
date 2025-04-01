@@ -148,7 +148,7 @@ print(nrow(city_bldgs))
 #map1 <- 
   
   
-  ggplot()+
+map1 <-  ggplot()+
   
   # add city buildings for entire bounding box
   geom_sf(city_bldgs, 
@@ -314,6 +314,11 @@ post_results <- atrrr::post(text = "Guess which city this is!\n\nCode and answer
                  image = c("map1.png", "map2.png"),
                  image_alt = c("A map of a city somewhere in the world\nMap generated using data from:https://www.openstreetmap.org", "A map of a city somewhere in the world\nMap generated using data from:https://www.openstreetmap.org"))
 
+
+# reply with link to the shiny
+
+post2_results <- atrrr:post(in_reply_to = post_results$uri,
+                            text = "Here's a link to shiny showing the city's street network:\nhttps://random-city-bot.shinyapps.io/todays-city/")
 
 print("posting finished")
 
