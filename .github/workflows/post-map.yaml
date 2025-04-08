@@ -38,6 +38,9 @@ jobs:
 
       - name: Install renv and restore packages
         uses: r-lib/actions/setup-renv@v2
+        
+      - name: Delete old version of geojson dataset
+        run: rm -fv inst/city-map-app/city_roads.geojson
 
       - name: Build map and record result
         run: Rscript R/generate_map.R

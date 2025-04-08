@@ -130,7 +130,8 @@ while(no_buildings){
   # save the city roads to the data folder
   
   # Delete old version
-  file.remove("inst/city-map-app/city_roads.geojson")
+  #file.remove("inst/city-map-app/city_roads.geojson")
+  # jk use shell script to remove
   
   # write new version
   st_write(city_roads, "inst/city-map-app/city_roads.geojson", append=FALSE)
