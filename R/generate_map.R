@@ -115,7 +115,7 @@ while(no_buildings){
       #'highway' = 'unclassified'
     )) |> 
     
-    osmdata::osmdata_sf()
+  osmdata::osmdata_sf()
   
   print("city_roads created")
   
@@ -128,6 +128,11 @@ while(no_buildings){
   
   
   # save the city roads to the data folder
+  
+  # Delete old version
+  file.remove("inst/city-map-app/city_roads.geojson")
+  
+  # write new version
   st_write(city_roads, "inst/city-map-app/city_roads.geojson", append=FALSE)
   
   
@@ -248,7 +253,7 @@ size_factor <- 51
 while(image_too_big){
 
   # decrease the size factor by 1
-  size_factor <- size_factor - 1
+  size_factor <- size_factor - 10
   
   # save map as image
   ggsave(filename = "map1.png",
@@ -279,7 +284,7 @@ size_factor <- 51
 while(image_too_big){
   
   # decrease the size factor by 1
-  size_factor <- size_factor - 1
+  size_factor <- size_factor - 10
   
   # save map as image
   ggsave(filename = "map2.png",
