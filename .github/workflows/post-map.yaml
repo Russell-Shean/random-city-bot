@@ -64,7 +64,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: Russell-Shean/shinyapps-deploy-sf-depends@v3
+      - uses: Russell-Shean/shinyapps-deploy-sf-depends@v3.1
         with:
           # account and application name (https://<accountName>.shinyapps.io/<appName>)
           appName: todays-city
