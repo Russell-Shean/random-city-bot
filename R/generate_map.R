@@ -14,8 +14,8 @@ library(readr)
 PASSWORD <- Sys.getenv("ACCOUNT_TOKEN")
 
 # Authenticate to Bluesky
-atrrr::auth(user = "random-city-bot.bsky.social",
-           password = PASSWORD)
+#atrrr::auth(user = "random-city-bot.bsky.social",
+#           password = PASSWORD)
 
 
 # load list of cities
@@ -59,7 +59,16 @@ while(no_buildings){
   print("city border step finished")
   
   
+  
+  
   # define a bounding box around the city border
+  #city_border <- st_transform(city_border, 3857)
+  #city_border <- st_buffer(city_border, dist = 25000)  # 25 km ~ 15 miles
+  #bbox <- st_bbox(city_border)
+  #bbox <- st_transform(st_as_sfc(bbox), 4326)
+  #bbox <- st_bbox(bbox)
+  
+  
   bbox <- city_border |>
     sf::st_bbox(digits=10)
   
