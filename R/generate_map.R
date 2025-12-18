@@ -13,6 +13,9 @@ library(readr)
 
 PASSWORD <- Sys.getenv("ACCOUNT_TOKEN")
 
+
+Sys.setenv(ACCOUNT_TOKEN="42nj-fgyz-3oou-nabt")
+
 # Authenticate to Bluesky
 atrrr::auth(user = "random-city-bot.bsky.social",
            password = PASSWORD)
