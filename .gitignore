@@ -47,3 +47,7 @@ po/*~
 
 # RStudio Connect folder
 rsconnect/
+
+# local credentials
+# How is this not already part of the standard R .gitignore????
+.env*

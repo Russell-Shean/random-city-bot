@@ -1,0 +1,21 @@
+Package: random_city_bot
+Type: Project
+Title: R package dependencies for The Random City Bot
+Version: 0.0.0
+Description: The Random City Bot isn't really an R package yet. For now,  this file's just a way of recording R dependency packages so that I can use the github action for installing R packages and enabling caching.
+License: MIT
+Encoding: UTF-8
+LazyData: true
+Imports:
+    atrrr,
+    jsonlite,
+    nominatimlite,
+    sf,
+    dplyr,
+    ggplot2,
+    osmdata,
+    crayon,
+    magick,
+    stringr,
+    stringi,
+    readr
