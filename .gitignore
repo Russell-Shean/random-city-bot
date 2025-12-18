@@ -38,6 +38,7 @@ vignettes/*.pdf
 
 # R Environment Variables
 .Renviron
+.env
 
 # pkgdown site
 docs/
@@ -48,6 +49,5 @@ po/*~
 # RStudio Connect folder
 rsconnect/
 
-# local credentials
-# How is this not already part of the standard R .gitignore????
-.env*
+
+
