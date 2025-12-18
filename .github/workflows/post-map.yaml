@@ -3,13 +3,6 @@ name: Create and post new map
 on:
   schedule:
     - cron: '0 20 * * *'  # Runs daily at 20:00 UTC (4 AM Taipei time)
-  push:
-    branches:
-      - main
-
-    paths:
-      - 'R/**'
-      - '.github/**'
 
   workflow_dispatch:
 
