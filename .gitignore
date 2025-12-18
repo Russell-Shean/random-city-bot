@@ -49,5 +49,8 @@ po/*~
 # RStudio Connect folder
 rsconnect/
 
-
+# big data files (for now)
+data/borders/
+data/buildings/
+data/roads/
 

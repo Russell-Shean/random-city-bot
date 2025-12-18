@@ -11,15 +11,20 @@ library(stringr)
 library(stringi)
 library(readr)
 
-PASSWORD <- Sys.getenv("ACCOUNT_TOKEN")
 
-# Authenticate to Bluesky
-#atrrr::auth(user = "random-city-bot.bsky.social",
-#           password = PASSWORD)
+if (Sys.getenv("GITHUB_ACTIONS") == "true" && Sys.getenv("LINTR_ERROR_ON_LINT") != "true") {
+  PASSWORD <- Sys.getenv("ACCOUNT_TOKEN")
+  
+  # Authenticate to Bluesky
+  atrrr::auth(user = "random-city-bot.bsky.social",
+             password = PASSWORD)
+  
+  
+}
 
 
 # load list of cities
-city_list <- read.csv("data/touristy_cities.csv") |> 
+city_list <- read_csv("data/touristy_cities.csv") |> 
   
   
              # remove accents and special characters from city query
@@ -45,15 +50,15 @@ while(no_buildings){
   
   
   # use the city without special characters in the name as the query
-  la <- random_row |>
+  city_name <- random_row |>
     pull(city_query)
   
-  print(la)
+  print(city_name)
   
   
   # find the city's border using a reverse geocoder
   # appears to work best with only the city 
-  city_border <- nominatimlite::geo_lite_sf(address = la, 
+  city_border <- nominatimlite::geo_lite_sf(address = city_name, 
                                             points_only = FALSE)
   
   print("city border step finished")
@@ -401,10 +406,10 @@ print("solutions.md updated")
 if(!dir.exists("archive")){dir.create("archive")}
 
 file.copy(from = "map1.png",
-          to = paste0("archive/", la, "1.png"))
+          to = paste0("archive/", city_name, "1.png"))
 
 file.copy(from = "map2.png",
-          to = paste0("archive/", la, "2.png"))
+          to = paste0("archive/", city_name, "2.png"))
 
 
 print("images archived")
