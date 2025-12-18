@@ -13,9 +13,6 @@ library(readr)
 
 PASSWORD <- Sys.getenv("ACCOUNT_TOKEN")
 
-
-Sys.setenv(ACCOUNT_TOKEN="42nj-fgyz-3oou-nabt")
-
 # Authenticate to Bluesky
 atrrr::auth(user = "random-city-bot.bsky.social",
            password = PASSWORD)
@@ -79,6 +76,9 @@ while(no_buildings){
     
     
     #skip to the next iteration of the while loop
+    rm(city_border, bbox)
+    gc()
+    next
     next
     
     }
@@ -88,12 +88,20 @@ while(no_buildings){
   city_bldgs <- opq(bbox) |> 
     add_osm_feature(key = 'building') |> 
     osmdata::osmdata_sf()
+  
+
+  
+ 
+  
 
   print("city_bldgs created")
   
   # select the building data we need?
-  city_bldgs <- city_bldgs$osm_polygons |> 
-    dplyr::select(osm_id, geometry)
+  #city_bldgs <- city_bldgs$osm_polygons |> 
+   # dplyr::select(osm_id, geometry)
+  
+  city_bldgs <- city_bldgs$osm_polygons[, c("osm_id", "geometry")]
+  gc()
   
   print("city_bldgs filtered")
   
