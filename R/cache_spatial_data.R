@@ -12,8 +12,18 @@ library(stringi)
 library(readr)
 
 
+
+options(osmdata_overpass_url =
+          "https://overpass.kumi.systems/api/interpreter"
+)
+
 # prerender all the city road networks
 # create roads for shiny
+
+# create directories
+if(!dir.exists("data/borders")) dir.create("data/borders", recursive = TRUE)
+if(!dir.exists("data/buildings")) dir.create("data/borders", recursive = TRUE)
+if(!dir.exists("data/roads")) dir.create("data/borders", recursive = TRUE)
 
 
 # load list of cities
@@ -61,10 +71,36 @@ gc()
 
 # Buildings ---------------------------------------------------------------------
 
+# split the city into a grid to avoid killing the overpass API lol
+# Suppose 'bbox' is London bounding box
+tiles <- st_make_grid(st_as_sfc(bbox), n = c(5,5))  # 4x4 grid
+
+all_buildings <- list()
+
+
+
+for(i in seq_along(tiles)) {
+  tile_bbox <- st_bbox(tiles[i])
+  
+  bldgs <- opq(tile_bbox) |>
+    add_osm_feature(key = "building") |>
+    osmdata_sf()
+  
+  all_buildings[[i]] <- bldgs$osm_polygons[, "geometry"]
+}
+
+
+
+# Combine all tiles
+city_bldgs <- do.call(rbind, all_buildings)
+
+rm(all_buildings, bldgs)
+gc()
+
 # find building features inside bounding box
-city_bldgs <- opq(bbox) |> 
-  add_osm_feature(key = 'building') |> 
-  osmdata::osmdata_sf()
+#city_bldgs <- opq(bbox) |> 
+ # add_osm_feature(key = 'building') |> 
+#  osmdata::osmdata_sf()
 
 
 
@@ -77,7 +113,7 @@ print("city_bldgs created")
 #city_bldgs <- city_bldgs$osm_polygons |> 
 # dplyr::select(osm_id, geometry)
 
-city_bldgs <- city_bldgs$osm_polygons[, c("osm_id", "geometry")]
+#city_bldgs <- city_bldgs$osm_polygons[, c("osm_id", "geometry")]
 
 
 print("city_bldgs filtered")
